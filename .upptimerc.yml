@@ -8,6 +8,8 @@
 owner: phonelive
 repo: pealcast-status-dev
 
+# Web properties (www / app / player / api) — monitored as HTTP (a real page /
+# health check that returns 200).
 sites:
   - name: Website
     url: https://dev.pealcast.io
@@ -15,15 +17,19 @@ sites:
   - name: App
     url: https://app.dev.pealcast.io
     icon: https://pealcast.io/favicon.svg
+  - name: Player
+    url: https://player.dev.pealcast.io
+    icon: https://pealcast.io/favicon.svg
   - name: API
     url: https://api.dev.pealcast.io/health
     icon: https://pealcast.io/favicon.svg
-  # Live streaming edge — a bare HTTP GET doesn't return 200 (the CDN serves
-  # streams, not a page), so check TCP reachability on 443 instead of HTTP status.
-  - name: Live
+  # Live = the streaming INGEST edge (RTMP/SRT), not a web page — check ingest
+  # reachable over TCP, not HTTP. RTMP ingest is TCP/1935 → tcp-ping. (SRT is UDP
+  # on the same edge, so a TCP check can't add a separate SRT signal.)
+  - name: Live (RTMP/SRT ingest)
     url: live.dev.pealcast.io
     check: tcp-ping
-    port: 443
+    port: 1935
     icon: https://pealcast.io/favicon.svg
 
 status-website:
