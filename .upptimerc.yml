@@ -38,6 +38,79 @@ status-website:
   name: PealCast Status (dev)
   favicon: https://pealcast.io/favicon.svg
   logoUrl: https://pealcast.io/favicon.svg
+  # PealCast branding + the "Text STATUS" SMS section + a plain-English legend of
+  # what each monitor is. Upptime injects this verbatim into <head>: a <style>
+  # that recolors the generated page to the Peal brand (cream/navy/brass, Georgia
+  # display type) and a <script> that inserts two on-brand sections (our own
+  # classes, so they're immune to Upptime's hashed Svelte classes).
+  customHeadHtml: |
+    <style>
+      :root{color-scheme:light}
+      html,body{background:#f7f3ea !important}
+      body,main,header,footer,section,.container{color:#14243d !important}
+      main.container{max-width:54rem;padding-left:1rem;padding-right:1rem}
+      h1,h2,h3{font-family:Georgia,'Iowan Old Style','Times New Roman',serif !important;color:#0f1c30 !important;letter-spacing:-.015em}
+      header h1{font-size:2.1rem}
+      .lead{color:#4c6285 !important;font-size:1.06rem;line-height:1.65}
+      a{color:#b07e2b !important}
+      nav .logo{color:#0f1c30 !important;font-weight:700}
+      nav a{color:#4c6285 !important;font-weight:600}
+      nav a[aria-current=page]{color:#b07e2b !important}
+      footer{color:#6d85a6 !important;border-top:1px solid #e2d8c4;margin-top:2rem}
+      section.live-status{background:linear-gradient(160deg,#fbf6ec,#f5e9cf) !important;border:1px solid #e0bc71 !important;border-radius:16px;color:#0f1c30 !important}
+      /* ---- injected PealCast sections ---- */
+      .pc-card{margin:1.6rem 0;border-radius:18px}
+      .pc-sms{padding:1.7rem 1.4rem;text-align:center;color:#f4f0e6;background:linear-gradient(160deg,#14243d 0%,#0c1a2e 100%);box-shadow:0 14px 36px -16px rgba(20,36,61,.55)}
+      .pc-sms .pc-badge{display:inline-block;font-size:.7rem;letter-spacing:.09em;text-transform:uppercase;color:#e0bc71;border:1px solid rgba(224,188,113,.45);border-radius:999px;padding:.28rem .75rem;margin-bottom:.75rem}
+      .pc-sms h2{color:#fff !important;font-size:1.55rem;margin:.15rem 0 .55rem}
+      .pc-sms p{color:#c9d3e2;font-size:1.02rem;line-height:1.6;max-width:35rem;margin:0 auto 1rem}
+      .pc-sms b{color:#fff}
+      .pc-btn{display:inline-block;background:#c89544;color:#0c1a2e !important;font-weight:700;text-decoration:none;padding:.85rem 1.4rem;border-radius:999px;box-shadow:0 8px 18px -6px rgba(200,149,68,.7);font-size:1.04rem}
+      .pc-btn:hover{background:#d4a64f}
+      .pc-steps{display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap;margin-top:1.1rem;font-size:.82rem}
+      .pc-steps span{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:999px;padding:.32rem .75rem;color:#aebccf}
+      .pc-fine{margin-top:.85rem;font-size:.77rem;color:#8ea0b8}
+      .pc-legend{padding:1.5rem 1.5rem 1.6rem;background:#fff;border:1px solid #e2d8c4}
+      .pc-legend h2{font-size:1.2rem;margin:0 0 .35rem}
+      .pc-legend>p{color:#4c6285;font-size:.92rem;margin:0 0 1rem}
+      .pc-legend ul{list-style:none;padding:0;margin:0;display:grid;gap:.85rem}
+      .pc-legend li{display:flex;gap:.75rem;align-items:flex-start;font-size:.94rem;color:#263756;line-height:1.55}
+      .pc-legend .pc-dot{width:.62rem;height:.62rem;border-radius:50%;background:#c89544;margin-top:.42rem;flex:0 0 auto}
+      .pc-legend b{color:#0f1c30}
+      .pc-legend .pc-host{color:#6d85a6}
+    </style>
+    <script>
+    (function(){
+      var SMS='<div class="pc-badge">Live status alerts</div>'+
+        '<h2>Get a text the moment something changes</h2>'+
+        '<p>Text <b>STATUS</b> to <b>(888)&nbsp;868-1618</b> and we&#39;ll text you when a service goes down &mdash; and again when it&#39;s back to normal. No app, no account. Reply <b>STOP</b> anytime.</p>'+
+        '<a class="pc-btn" href="sms:+18888681618?&body=STATUS">Text STATUS to (888) 868-1618</a>'+
+        '<div class="pc-steps"><span>1 &middot; Text STATUS</span><span>2 &middot; We confirm you&#39;re in</span><span>3 &middot; We text on any incident</span></div>'+
+        '<div class="pc-fine">Msg &amp; data rates may apply &middot; US &amp; Canada</div>';
+      var LEG='<h2>What we&#39;re watching</h2>'+
+        '<p>Each item above is a live check of one part of PealCast:</p><ul>'+
+        '<li><span class="pc-dot"></span><div><b>Website</b> &mdash; our marketing site at <span class="pc-host">pealcast.io</span>, where churches learn about PealCast.</div></li>'+
+        '<li><span class="pc-dot"></span><div><b>App</b> &mdash; the church dashboard at <span class="pc-host">app.pealcast.io</span>, where you set up channels, go live, and see who watched.</div></li>'+
+        '<li><span class="pc-dot"></span><div><b>Player</b> &mdash; the watch page at <span class="pc-host">player.pealcast.io</span> where your congregation streams the service.</div></li>'+
+        '<li><span class="pc-dot"></span><div><b>API</b> &mdash; the backend at <span class="pc-host">api.pealcast.io</span> that powers sign-in, streaming, notifications, and stats.</div></li>'+
+        '<li><span class="pc-dot"></span><div><b>Live (RTMP/SRT ingest)</b> &mdash; the streaming edge your encoder pushes to when you go live.</div></li>'+
+        '</ul>';
+      function inject(){
+        var main=document.querySelector('main.container'); if(!main) return;
+        if(!document.querySelector('.pc-sms')){
+          var h=main.querySelector('header');
+          var d=document.createElement('div'); d.className='pc-card pc-sms'; d.innerHTML=SMS;
+          if(h&&h.parentNode){h.insertAdjacentElement('afterend',d);} else {main.insertBefore(d,main.firstChild);}
+        }
+        if(!document.querySelector('.pc-legend')){
+          var l=document.createElement('div'); l.className='pc-card pc-legend'; l.innerHTML=LEG;
+          main.appendChild(l);
+        }
+      }
+      if(document.readyState!=='loading'){inject();} else {document.addEventListener('DOMContentLoaded',inject);}
+      var n=0,t=setInterval(function(){inject(); if(++n>15||(document.querySelector('.pc-sms')&&document.querySelector('.pc-legend')))clearInterval(t);},300);
+    })();
+    </script>
   introTitle: "PealCast System Status — DEV"
   introMessage: >-
     Live status of the PealCast **development** environment (dev.pealcast.io). This
