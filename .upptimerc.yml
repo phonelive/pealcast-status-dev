@@ -61,6 +61,11 @@ status-website:
       /* status colors -> PealCast: muted green = up, LIVE coral = down (no neon mint) */
       main article.up{border-left-color:#2f8f63 !important;border-top-color:#e2d8c4 !important;border-right-color:#e2d8c4 !important;border-bottom-color:#e2d8c4 !important}
       main article.down,main article.degraded{border-left-color:#f0432a !important}
+      /* the summary banner (no per-site graph) -> a polished branded success/alert box */
+      main article.up:not(.graph){background:linear-gradient(160deg,#eff7f1,#e4f1e9) !important;border:1px solid #cfe6d8 !important;border-left:4px solid #2f8f63 !important;border-radius:14px !important;padding:1.05rem 1.3rem !important;color:#235c41 !important;box-shadow:0 6px 18px -12px rgba(47,143,99,.5)}
+      main article.up:not(.graph) a,main article.up:not(.graph) h4,main article.up:not(.graph) h2,main article.up:not(.graph) h3{color:#235c41 !important;font-weight:600;font-size:1.05rem}
+      main article.down:not(.graph){background:linear-gradient(160deg,#fdeeeb,#fbe3de) !important;border:1px solid #f6cabf !important;border-left:4px solid #f0432a !important;border-radius:14px !important;padding:1.05rem 1.3rem !important;color:#9c2a17 !important}
+      main article.down:not(.graph) a,main article.down:not(.graph) h4,main article.down:not(.graph) h2,main article.down:not(.graph) h3{color:#9c2a17 !important;font-weight:600}
       /* per-card explanation line */
       .pc-note{margin:.6rem 0 0;padding-top:.55rem;border-top:1px dashed #ece3d1;font-size:.85rem;color:#4c6285;line-height:1.5}
       /* SMS callout card */
