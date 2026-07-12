@@ -1,0 +1,56 @@
+# PealCast DEV status page + uptime monitor — Upptime (free: GitHub Actions
+# monitor the endpoints, Issues are incidents, Pages hosts the site). This is the
+# DEV instance: it monitors the dev.pealcast.io surfaces and serves
+# status.dev.pealcast.io. The prod instance is the separate repo
+# phonelive/pealcast-status (status.pealcast.io). Both CNAME to phonelive.github.io;
+# GitHub Pages routes by custom domain. See the pealcast repo:
+# docs/2026-07-12-status-page-and-sms-alerts.md.
+owner: phonelive
+repo: pealcast-status-dev
+
+sites:
+  - name: Website
+    url: https://dev.pealcast.io
+    icon: https://pealcast.io/favicon.svg
+  - name: App
+    url: https://app.dev.pealcast.io
+    icon: https://pealcast.io/favicon.svg
+  - name: API
+    url: https://api.dev.pealcast.io/health
+    icon: https://pealcast.io/favicon.svg
+  # Live streaming edge — a bare HTTP GET doesn't return 200 (the CDN serves
+  # streams, not a page), so check TCP reachability on 443 instead of HTTP status.
+  - name: Live
+    url: live.dev.pealcast.io
+    check: tcp-ping
+    port: 443
+    icon: https://pealcast.io/favicon.svg
+
+status-website:
+  theme: light
+  cname: status.dev.pealcast.io
+  name: PealCast Status (dev)
+  favicon: https://pealcast.io/favicon.svg
+  logoUrl: https://pealcast.io/favicon.svg
+  introTitle: "PealCast System Status — DEV"
+  introMessage: >-
+    Live status of the PealCast **development** environment (dev.pealcast.io). This
+    is the staging status page; production status is at
+    [status.pealcast.io](https://status.pealcast.io).
+  navbar:
+    - title: Status
+      href: /
+    - title: Prod status
+      href: https://status.pealcast.io/
+    - title: App (dev)
+      href: https://app.dev.pealcast.io/
+
+workflowSchedule:
+  graphs: "0 0 * * *"
+  responseTime: "*/30 * * * *"
+  staticSite: "*/30 * * * *"
+  summary: "*/30 * * * *"
+  uptime: "*/5 * * * *"
+
+i18n:
+  footer: "© PealCast — a Smart Talk company (dev)"
