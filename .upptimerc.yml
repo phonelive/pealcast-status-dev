@@ -35,7 +35,7 @@ sites:
 status-website:
   theme: light
   cname: status.dev.pealcast.io
-  name: PealCast Status (dev)
+  name: System Status (dev)
   favicon: https://pealcast.io/favicon.svg
   logoUrl: https://dev.pealcast.io/pealcast-logo.svg
   # PealCast branding + the "Text STATUS" SMS section + a plain-English legend of
@@ -53,7 +53,9 @@ status-website:
       header h1{font-size:2.1rem}
       .lead{color:#4c6285 !important;font-size:1.06rem;line-height:1.65}
       a{color:#b07e2b !important}
-      nav .logo{color:#0f1c30 !important;font-weight:700}
+      nav .logo{color:#0f1c30 !important;font-weight:700;gap:.55rem}
+      nav .logo img{height:34px !important;width:auto !important}
+      nav .logo div{font-family:Georgia,'Iowan Old Style','Times New Roman',serif !important;font-weight:600 !important;color:#4c6285 !important;font-size:1.05rem !important;letter-spacing:-.01em}
       nav a{color:#4c6285 !important;font-weight:600}
       nav a[aria-current=page]{color:#b07e2b !important;border-bottom-color:#b07e2b !important}
       footer{color:#6d85a6 !important;border-top:1px solid #e2d8c4;margin-top:2rem}
