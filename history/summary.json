@@ -10,11 +10,11 @@
     "uptimeWeek": "100.00%",
     "uptimeMonth": "100.00%",
     "uptimeYear": "100.00%",
-    "time": 253,
-    "timeDay": 253,
-    "timeWeek": 253,
-    "timeMonth": 253,
-    "timeYear": 253,
+    "time": 267,
+    "timeDay": 267,
+    "timeWeek": 267,
+    "timeMonth": 267,
+    "timeYear": 267,
     "dailyMinutesDown": {}
   },
   {
@@ -28,11 +28,11 @@
     "uptimeWeek": "100.00%",
     "uptimeMonth": "100.00%",
     "uptimeYear": "100.00%",
-    "time": 336,
-    "timeDay": 336,
-    "timeWeek": 336,
-    "timeMonth": 336,
-    "timeYear": 336,
+    "time": 320,
+    "timeDay": 320,
+    "timeWeek": 320,
+    "timeMonth": 320,
+    "timeYear": 320,
     "dailyMinutesDown": {}
   },
   {
@@ -46,11 +46,11 @@
     "uptimeWeek": "100.00%",
     "uptimeMonth": "100.00%",
     "uptimeYear": "100.00%",
-    "time": 267,
-    "timeDay": 267,
-    "timeWeek": 267,
-    "timeMonth": 267,
-    "timeYear": 267,
+    "time": 247,
+    "timeDay": 247,
+    "timeWeek": 247,
+    "timeMonth": 247,
+    "timeYear": 247,
     "dailyMinutesDown": {}
   },
   {
@@ -64,11 +64,11 @@
     "uptimeWeek": "100.00%",
     "uptimeMonth": "100.00%",
     "uptimeYear": "100.00%",
-    "time": 226,
-    "timeDay": 226,
-    "timeWeek": 226,
-    "timeMonth": 226,
-    "timeYear": 226,
+    "time": 249,
+    "timeDay": 249,
+    "timeWeek": 249,
+    "timeMonth": 249,
+    "timeYear": 249,
     "dailyMinutesDown": {}
   },
   {
@@ -88,5 +88,25 @@
     "timeMonth": 6,
     "timeYear": 6,
     "dailyMinutesDown": {}
+  },
+  {
+    "name": "Demo — sample outage",
+    "url": "https://outage-demo.dev.pealcast.io",
+    "icon": "https://pealcast.io/favicon.svg",
+    "slug": "demo-sample-outage",
+    "status": "down",
+    "uptime": "81.28%",
+    "uptimeDay": "81.28%",
+    "uptimeWeek": "81.28%",
+    "uptimeMonth": "81.28%",
+    "uptimeYear": "81.28%",
+    "time": 0,
+    "timeDay": 0,
+    "timeWeek": 0,
+    "timeMonth": 0,
+    "timeYear": 0,
+    "dailyMinutesDown": {
+      "2026-07-13": 0
+    }
   }
 ]
