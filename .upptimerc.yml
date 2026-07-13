@@ -42,7 +42,7 @@ status-website:
   cname: status.dev.pealcast.io
   name: PealCast Status (dev)
   favicon: https://pealcast.io/favicon.svg
-  logoUrl: https://pealcast.io/favicon.svg
+  logoUrl: https://dev.pealcast.io/pealcast-logo.svg
   # PealCast branding + the "Text STATUS" SMS section + a plain-English legend of
   # what each monitor is. Upptime injects this verbatim into <head>: a <style>
   # that recolors the generated page to the Peal brand (cream/navy/brass, Georgia
@@ -124,7 +124,8 @@ status-website:
           card.appendChild(p);
         });
       }
-      function run(){injectSms();injectNotes();}
+      function stripStatusEmoji(){document.querySelectorAll('main article.up:not(.graph) h4,main article.down:not(.graph) h4,main h1,main h2').forEach(function(el){if(el.dataset.pcClean)return;var f=el.firstChild;if(f&&f.nodeType===3){var u=f.nodeValue.replace(/^[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}✅❌️\s]+/u,'');if(u!==f.nodeValue){f.nodeValue=u;el.dataset.pcClean='1';}}});}
+      function run(){injectSms();injectNotes();stripStatusEmoji();}
       if(document.readyState!=='loading'){run();}else{document.addEventListener('DOMContentLoaded',run);}
       var n=0,t=setInterval(function(){run(); if(++n>20)clearInterval(t);},300);
       var m=document.querySelector('main.container');
