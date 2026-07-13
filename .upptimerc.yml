@@ -53,9 +53,9 @@ status-website:
       header h1{font-size:2.1rem}
       .lead{color:#4c6285 !important;font-size:1.06rem;line-height:1.65}
       a{color:#b07e2b !important}
-      nav .logo{color:#0f1c30 !important;font-weight:700;gap:.55rem}
-      nav .logo img{height:34px !important;width:auto !important}
-      nav .logo div{font-family:Georgia,'Iowan Old Style','Times New Roman',serif !important;font-weight:600 !important;color:#4c6285 !important;font-size:1.05rem !important;letter-spacing:-.01em}
+      nav .logo{color:#0f1c30 !important;font-weight:700}
+      nav .logo img{height:30px !important;width:auto !important}
+      nav .logo div{display:none !important}
       nav a{color:#4c6285 !important;font-weight:600}
       nav a[aria-current=page]{color:#b07e2b !important;border-bottom-color:#b07e2b !important}
       footer{color:#6d85a6 !important;border-top:1px solid #e2d8c4;margin-top:2rem}
@@ -88,6 +88,13 @@ status-website:
       .pc-steps{display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap;margin-top:1.1rem;font-size:.82rem}
       .pc-steps span{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:999px;padding:.32rem .75rem;color:#aebccf}
       .pc-fine{margin-top:.85rem;font-size:.77rem;color:#8ea0b8}
+      /* one quiet, state-aware CTA near the bottom (trial when healthy, support during an incident) */
+      .pc-cta{margin:2.2rem 0 .5rem;text-align:center;padding:1.7rem 1rem 0;border-top:1px solid #ece3d1}
+      .pc-cta-lead{color:#4c6285;font-size:1rem;line-height:1.55;margin:0 auto .95rem;max-width:34rem}
+      .pc-cta-btn{display:inline-block;background:#c89544;color:#0c1a2e !important;font-weight:700;text-decoration:none;padding:.72rem 1.35rem;border-radius:999px;box-shadow:0 6px 16px -6px rgba(200,149,68,.6);font-size:1rem}
+      .pc-cta-btn:hover{background:#d4a64f}
+      .pc-cta-support{background:transparent;color:#b07e2b !important;border:1.5px solid #d8cbb0;box-shadow:none}
+      .pc-cta-support:hover{background:#f5e9cf}
     </style>
     <script>
     (function(){
@@ -122,7 +129,8 @@ status-website:
         });
       }
       function stripStatusEmoji(){document.querySelectorAll('main article.up:not(.graph),main article.down:not(.graph),main article.up:not(.graph) h4,main article.down:not(.graph) h4,main h1,main h2').forEach(function(el){if(el.dataset.pcClean)return;var f=el.firstChild;if(f&&f.nodeType===3){var u=f.nodeValue.replace(/^[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}✅❌️\s]+/u,'');if(u!==f.nodeValue){f.nodeValue=u;el.dataset.pcClean='1';}}});}
-      function run(){injectSms();injectNotes();stripStatusEmoji();}
+      function injectCta(){var main=document.querySelector('main.container');if(!main||document.querySelector('.pc-cta'))return;var incident=/\/incident/.test(location.pathname)||!!document.querySelector('main article.down:not(.graph),.tag.open,.tag.down');var d=document.createElement('div');d.className='pc-cta';d.innerHTML=incident?'<p class="pc-cta-lead">Something not working right? Our team is on it &mdash; and here if you need a hand.</p><a class="pc-cta-btn pc-cta-support" href="https://pealcast.io/contact">Message our support team</a>':'<p class="pc-cta-lead">Rock-solid when it matters most &mdash; every service, every Sunday. The reliability your congregation can count on.</p><a class="pc-cta-btn" href="https://app.pealcast.io/signup">Start your free trial &rarr;</a>';main.appendChild(d);}
+      function run(){injectSms();injectNotes();stripStatusEmoji();injectCta();}
       if(document.readyState!=='loading'){run();}else{document.addEventListener('DOMContentLoaded',run);}
       var n=0,t=setInterval(function(){run(); if(++n>20)clearInterval(t);},300);
       var m=document.querySelector('main.container');
