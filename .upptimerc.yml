@@ -31,11 +31,6 @@ sites:
     check: tcp-ping
     port: 1935
     icon: https://pealcast.io/favicon.svg
-  # TEMPORARY demo monitor (dev only) — points at a host that doesn't resolve, so
-  # it reads DOWN. Lets us see the incident/degraded styling. REMOVE after review.
-  - name: Demo — sample outage
-    url: https://outage-demo.dev.pealcast.io
-    icon: https://pealcast.io/favicon.svg
 
 status-website:
   theme: light
