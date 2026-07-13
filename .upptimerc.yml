@@ -53,12 +53,16 @@ status-website:
       header h1{font-size:2.1rem}
       .lead{color:#4c6285 !important;font-size:1.06rem;line-height:1.65}
       a{color:#b07e2b !important}
-      /* header — match pealcast.io: full-width bar, wordmark far-left, nav far-right */
+      /* header — match pealcast.io exactly: bell + PealCast + Beta, full-width bar, nav far-right */
       nav{background:#fff !important;border-bottom:1px solid #e2d8c4 !important}
-      nav .container{max-width:100% !important;margin:0 !important;padding:.85rem 1.5rem !important}
-      nav .logo{color:#0f1c30 !important}
-      nav .logo img{height:42px !important;width:auto !important}
+      nav .container{max-width:100% !important;margin:0 !important;padding:.85rem 1.6rem !important}
+      nav .logo{color:#0f1c30 !important;gap:0 !important}
+      nav .logo img{display:none !important}
       nav .logo div{display:none !important}
+      .pc-brand{display:inline-flex;align-items:center;gap:.55rem;text-decoration:none}
+      .pc-brand svg{width:30px;height:28px;display:block}
+      .pc-brand-txt{font-size:1.5rem;font-weight:600;color:#0f1c30;letter-spacing:-.01em;font-family:-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif}
+      .pc-beta{background:#f5e9cf;color:#8c6220;font-size:.68rem;font-weight:700;padding:.12rem .45rem;border-radius:6px;margin-left:.15rem;align-self:flex-start;margin-top:.2rem;line-height:1.2}
       nav ul a{padding:.5rem .8rem !important;font-size:1rem !important;color:#4c6285 !important;font-weight:500 !important;border-radius:8px !important;border-bottom:0 !important}
       nav ul a:hover{background:#efe8d8 !important;color:#0f1c30 !important}
       nav ul a[aria-current=page]{color:#b07e2b !important;font-weight:600 !important;border-bottom:0 !important}
@@ -136,7 +140,8 @@ status-website:
       }
       function stripStatusEmoji(){document.querySelectorAll('main article.up:not(.graph),main article.down:not(.graph),main article.up:not(.graph) h4,main article.down:not(.graph) h4,main h1,main h2').forEach(function(el){if(el.dataset.pcClean)return;var f=el.firstChild;if(f&&f.nodeType===3){var u=f.nodeValue.replace(/^[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}✅❌️\s]+/u,'');if(u!==f.nodeValue){f.nodeValue=u;el.dataset.pcClean='1';}}});}
       function injectCta(){var main=document.querySelector('main.container');if(!main||document.querySelector('.pc-cta'))return;var incident=/\/incident/.test(location.pathname)||!!document.querySelector('main article.down:not(.graph),.tag.open,.tag.down');var d=document.createElement('div');d.className='pc-cta';d.innerHTML=incident?'<p class="pc-cta-lead">Something not working right? Our team is on it &mdash; and here if you need a hand.</p><a class="pc-cta-btn pc-cta-support" href="https://pealcast.io/contact">Message our support team</a>':'<p class="pc-cta-lead">Rock-solid when it matters most &mdash; every service, every Sunday. The reliability your congregation can count on.</p><a class="pc-cta-btn" href="https://app.pealcast.io/signup">Start your free trial &rarr;</a>';main.appendChild(d);}
-      function run(){injectSms();injectNotes();stripStatusEmoji();injectCta();}
+      function injectLogo(){var logo=document.querySelector('nav .logo');if(!logo||logo.querySelector('.pc-brand'))return;var span=document.createElement('span');span.className='pc-brand';span.innerHTML='<svg viewBox="0 0 26 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 3a2 2 0 0 0-2 2v.35C7.1 6.2 5 8.9 5 12v4l-2 3v1h18v-1l-2-3v-4c0-3.1-2.1-5.8-5-6.65V5a2 2 0 0 0-2-2z" fill="#14243d"/><path d="M9.5 21a2.5 2.5 0 0 0 5 0z" fill="#14243d"/><circle cx="22" cy="4.6" r="3.6" fill="#F0432A"/></svg><span class="pc-brand-txt">PealCast</span><span class="pc-beta">Beta</span>';logo.insertBefore(span,logo.firstChild);}
+      function run(){injectLogo();injectSms();injectNotes();stripStatusEmoji();injectCta();}
       if(document.readyState!=='loading'){run();}else{document.addEventListener('DOMContentLoaded',run);}
       var n=0,t=setInterval(function(){run(); if(++n>20)clearInterval(t);},300);
       var m=document.querySelector('main.container');
