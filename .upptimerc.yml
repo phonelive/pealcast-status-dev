@@ -71,6 +71,12 @@ status-website:
       main article.up:not(.graph) a,main article.up:not(.graph) h4,main article.up:not(.graph) h2,main article.up:not(.graph) h3{color:#235c41 !important;font-weight:600;font-size:1.05rem}
       main article.down:not(.graph){background:linear-gradient(160deg,#fdeeeb,#fbe3de) !important;border:1px solid #f6cabf !important;border-left:4px solid #f0432a !important;border-radius:14px !important;padding:1.05rem 1.3rem !important;color:#9c2a17 !important}
       main article.down:not(.graph) a,main article.down:not(.graph) h4,main article.down:not(.graph) h2,main article.down:not(.graph) h3{color:#9c2a17 !important;font-weight:600}
+      /* status + incident badges -> PealCast: green = healthy, coral = incident */
+      .tag{border-radius:6px !important;font-weight:600}
+      .tag.up,.tag.closed,.tag.resolved,.tag.operational{background:#2f8f63 !important;color:#fff !important}
+      .tag.down,.tag.degraded,.tag.open,.tag.hasissues{background:#f0432a !important;color:#fff !important}
+      /* response-time graph (canvas) -> shift Upptime's teal line to brand brass */
+      main canvas{filter:hue-rotate(-132deg) saturate(.82) brightness(.95)}
       /* per-card explanation line */
       .pc-note{margin:.6rem 0 0;padding-top:.55rem;border-top:1px dashed #ece3d1;font-size:.85rem;color:#4c6285;line-height:1.5}
       /* SMS callout card */
