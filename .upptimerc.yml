@@ -63,6 +63,8 @@ status-website:
       /* status colors -> PealCast: muted green = up, LIVE coral = down (no neon mint) */
       main article.up{border-left-color:#2f8f63 !important;border-top-color:#e2d8c4 !important;border-right-color:#e2d8c4 !important;border-bottom-color:#e2d8c4 !important}
       main article.down,main article.degraded{border-left-color:#f0432a !important}
+      /* hide the teal response-time PNG sparkline behind each card (off-brand + noisy; the avg-response number + the history-page graph already cover it) */
+      main article.graph{background-image:none !important}
       /* the summary banner (no per-site graph) -> a polished branded success/alert box */
       main article.up:not(.graph){background:linear-gradient(160deg,#eff7f1,#e4f1e9) !important;border:1px solid #cfe6d8 !important;border-left:4px solid #2f8f63 !important;border-radius:14px !important;padding:1.05rem 1.3rem !important;color:#235c41 !important;box-shadow:0 6px 18px -12px rgba(47,143,99,.5)}
       main article.up:not(.graph) a,main article.up:not(.graph) h4,main article.up:not(.graph) h2,main article.up:not(.graph) h3{color:#235c41 !important;font-weight:600;font-size:1.05rem}
