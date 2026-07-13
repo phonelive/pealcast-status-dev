@@ -53,11 +53,15 @@ status-website:
       header h1{font-size:2.1rem}
       .lead{color:#4c6285 !important;font-size:1.06rem;line-height:1.65}
       a{color:#b07e2b !important}
-      nav .logo{color:#0f1c30 !important;font-weight:700}
-      nav .logo img{height:30px !important;width:auto !important}
+      /* header — match pealcast.io: full-width bar, wordmark far-left, nav far-right */
+      nav{background:#fff !important;border-bottom:1px solid #e2d8c4 !important}
+      nav .container{max-width:100% !important;margin:0 !important;padding:.85rem 1.5rem !important}
+      nav .logo{color:#0f1c30 !important}
+      nav .logo img{height:42px !important;width:auto !important}
       nav .logo div{display:none !important}
-      nav a{color:#4c6285 !important;font-weight:600}
-      nav a[aria-current=page]{color:#b07e2b !important;border-bottom-color:#b07e2b !important}
+      nav ul a{padding:.5rem .8rem !important;font-size:1rem !important;color:#4c6285 !important;font-weight:500 !important;border-radius:8px !important;border-bottom:0 !important}
+      nav ul a:hover{background:#efe8d8 !important;color:#0f1c30 !important}
+      nav ul a[aria-current=page]{color:#b07e2b !important;font-weight:600 !important;border-bottom:0 !important}
       footer{color:#6d85a6 !important;border-top:1px solid #e2d8c4;margin-top:2rem}
       section.live-status{background:linear-gradient(160deg,#fbf6ec,#f5e9cf) !important;border:1px solid #e0bc71 !important;border-radius:16px;color:#0f1c30 !important}
       /* status colors -> PealCast: muted green = up, LIVE coral = down (no neon mint) */
