@@ -58,9 +58,9 @@
     "url": "https://api.dev.pealcast.io/health",
     "icon": "https://pealcast.io/favicon.svg",
     "slug": "api",
-    "status": "up",
+    "status": "down",
     "uptime": "100.00%",
-    "uptimeDay": "100.00%",
+    "uptimeDay": "99.97%",
     "uptimeWeek": "100.00%",
     "uptimeMonth": "100.00%",
     "uptimeYear": "100.00%",
@@ -69,7 +69,9 @@
     "timeWeek": 364,
     "timeMonth": 306,
     "timeYear": 306,
-    "dailyMinutesDown": {}
+    "dailyMinutesDown": {
+      "2026-08-02": 0
+    }
   },
   {
     "name": "Live (RTMP/SRT ingest)",
@@ -88,7 +90,7 @@
     "timeMonth": 6,
     "timeYear": 6,
     "dailyMinutesDown": {
-      "2026-08-02": 20,
+      "2026-08-02": 117,
       "2026-08-01": 1440,
       "2026-07-31": 1440,
       "2026-07-30": 1440,
