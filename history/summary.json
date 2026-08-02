@@ -58,19 +58,19 @@
     "url": "https://api.dev.pealcast.io/health",
     "icon": "https://pealcast.io/favicon.svg",
     "slug": "api",
-    "status": "down",
-    "uptime": "100.00%",
-    "uptimeDay": "99.97%",
-    "uptimeWeek": "100.00%",
-    "uptimeMonth": "100.00%",
-    "uptimeYear": "100.00%",
-    "time": 306,
-    "timeDay": 295,
-    "timeWeek": 364,
-    "timeMonth": 306,
-    "timeYear": 306,
+    "status": "up",
+    "uptime": "99.79%",
+    "uptimeDay": "95.76%",
+    "uptimeWeek": "99.39%",
+    "uptimeMonth": "99.79%",
+    "uptimeYear": "99.79%",
+    "time": 313,
+    "timeDay": 388,
+    "timeWeek": 379,
+    "timeMonth": 313,
+    "timeYear": 313,
     "dailyMinutesDown": {
-      "2026-08-02": 0
+      "2026-08-02": 61
     }
   },
   {
@@ -90,7 +90,7 @@
     "timeMonth": 6,
     "timeYear": 6,
     "dailyMinutesDown": {
-      "2026-08-02": 117,
+      "2026-08-02": 178,
       "2026-08-01": 1440,
       "2026-07-31": 1440,
       "2026-07-30": 1440,
