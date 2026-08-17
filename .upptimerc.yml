@@ -23,14 +23,6 @@ sites:
   - name: API
     url: https://api.dev.pealcast.io/health
     icon: https://pealcast.io/favicon.svg
-  # Live = the streaming INGEST edge (RTMP/SRT), not a web page — check ingest
-  # reachable over TCP, not HTTP. RTMP ingest is TCP/1935 → tcp-ping. (SRT is UDP
-  # on the same edge, so a TCP check can't add a separate SRT signal.)
-  - name: Live (RTMP/SRT ingest)
-    url: live.dev.pealcast.io
-    check: tcp-ping
-    port: 1935
-    icon: https://pealcast.io/favicon.svg
 
 status-website:
   theme: light
@@ -44,6 +36,7 @@ status-website:
   # display type) and a <script> that inserts two on-brand sections (our own
   # classes, so they're immune to Upptime's hashed Svelte classes).
   customHeadHtml: |
+    <meta name="robots" content="noindex, nofollow">
     <style>
       :root{color-scheme:light}
       html,body{background:#f7f3ea !important}
@@ -110,16 +103,15 @@ status-website:
     (function(){
       var SMS='<div class="pc-badge">Live status alerts</div>'+
         '<h2>Get a text the moment something changes</h2>'+
-        '<p>Text <b>STATUS</b> to <b>(888)&nbsp;868-1618</b> and we&#39;ll text you when a service goes down &mdash; and again when it&#39;s back to normal. No app, no account. Reply <b>STOP</b> anytime.</p>'+
-        '<a class="pc-btn" href="sms:+18888681618?&body=STATUS">Text STATUS to (888) 868-1618</a>'+
+        '<p>Text <b>STATUS</b> to <b>(888)&nbsp;822-8969</b> and we&#39;ll text you when a service goes down &mdash; and again when it&#39;s back to normal. No app, no account. Reply <b>STOP</b> anytime.</p>'+
+        '<a class="pc-btn" href="sms:+18888228969?&body=STATUS">Text STATUS to (888) 822-8969</a>'+
         '<div class="pc-steps"><span>1 &middot; Text STATUS</span><span>2 &middot; We confirm you&#39;re in</span><span>3 &middot; We text on any incident</span></div>'+
         '<div class="pc-fine">Msg &amp; data rates may apply &middot; US &amp; Canada</div>';
       var NOTES={
-        'Website':'Our marketing site (pealcast.io), where churches learn about PealCast.',
-        'App':'The church dashboard (app.pealcast.io) — set up channels, go live, and see who watched.',
-        'Player':'The watch page (player.pealcast.io) where your congregation streams the service.',
-        'API':'The backend (api.pealcast.io) that powers sign-in, streaming, notifications, and stats.',
-        'Live':'The streaming edge (RTMP/SRT) your encoder pushes to when you go live.'
+        'Website':'The marketing site, dev build (dev.pealcast.io).',
+        'App':'The church dashboard, dev build (app.dev.pealcast.io).',
+        'Player':'The watch page, dev build (player.dev.pealcast.io).',
+        'API':'The backend, dev build (api.dev.pealcast.io).'
       };
       function injectSms(){
         var main=document.querySelector('main.container'); if(!main||document.querySelector('.pc-sms'))return;
@@ -139,7 +131,7 @@ status-website:
         });
       }
       function stripStatusEmoji(){document.querySelectorAll('main article.up:not(.graph),main article.down:not(.graph),main article.up:not(.graph) h4,main article.down:not(.graph) h4,main h1,main h2').forEach(function(el){if(el.dataset.pcClean)return;var f=el.firstChild;if(f&&f.nodeType===3){var u=f.nodeValue.replace(/^[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}✅❌️\s]+/u,'');if(u!==f.nodeValue){f.nodeValue=u;el.dataset.pcClean='1';}}});}
-      function injectCta(){var main=document.querySelector('main.container');if(!main||document.querySelector('.pc-cta'))return;var incident=/\/incident/.test(location.pathname)||!!document.querySelector('main article.down:not(.graph),.tag.open,.tag.down');var d=document.createElement('div');d.className='pc-cta';d.innerHTML=incident?'<p class="pc-cta-lead">Something not working right? Our team is on it &mdash; and here if you need a hand.</p><a class="pc-cta-btn pc-cta-support" href="https://pealcast.io/contact">Message our support team</a>':'<p class="pc-cta-lead">Rock-solid when it matters most &mdash; every service, every Sunday. The reliability your congregation can count on.</p><a class="pc-cta-btn" href="https://app.pealcast.io/signup">Start your free trial &rarr;</a>';main.appendChild(d);}
+      function injectCta(){var main=document.querySelector('main.container');if(!main||document.querySelector('.pc-cta'))return;var incident=/\/incident/.test(location.pathname)||!!document.querySelector('main article.down:not(.graph),.tag.open,.tag.down');var d=document.createElement('div');d.className='pc-cta';d.innerHTML=incident?'<p class="pc-cta-lead">Something not working right? Our team is on it &mdash; and here if you need a hand.</p><a class="pc-cta-btn pc-cta-support" href="https://status.pealcast.io/">See production status</a>':'<p class="pc-cta-lead">This is the <b>development</b> environment. Production status lives at status.pealcast.io.</p><a class="pc-cta-btn pc-cta-support" href="https://status.pealcast.io/">See production status &rarr;</a>';main.appendChild(d);}
       function injectLogo(){var logo=document.querySelector('nav .logo');if(!logo||logo.querySelector('.pc-brand'))return;var span=document.createElement('span');span.className='pc-brand';span.innerHTML='<svg viewBox="0 0 26 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 3a2 2 0 0 0-2 2v.35C7.1 6.2 5 8.9 5 12v4l-2 3v1h18v-1l-2-3v-4c0-3.1-2.1-5.8-5-6.65V5a2 2 0 0 0-2-2z" fill="#14243d"/><path d="M9.5 21a2.5 2.5 0 0 0 5 0z" fill="#14243d"/><circle cx="22" cy="4.6" r="3.6" fill="#F0432A"/></svg><span class="pc-brand-txt">PealCast</span>';logo.insertBefore(span,logo.firstChild);}
       function run(){injectLogo();injectSms();injectNotes();stripStatusEmoji();injectCta();}
       if(document.readyState!=='loading'){run();}else{document.addEventListener('DOMContentLoaded',run);}
