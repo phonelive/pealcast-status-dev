@@ -31,6 +31,14 @@ sites:
   # answer — active host with credentials, playback signing key stored, no
   # sustained platform errors — and returns 503 when streaming is not
   # serviceable. See the pealcast repo: app/controllers/health.rb.
+  #
+  # ⭐ live.dev.pealcast.io IS covered here — just not by probing it from a runner.
+  # The API resolves the branded ingest hostname on every scheduler tick
+  # (StreamPlatformStatus) and folds the answer into this endpoint, so the address
+  # an encoder is configured with is genuinely watched: DNS is a question we can
+  # answer, a TCP handshake to a shared anycast edge never was. The same endpoint
+  # also carries the video platform's own status, so a host-side incident shows
+  # here before anyone notices it by symptom.
   - name: Live streaming
     url: https://api.dev.pealcast.io/health/streaming
     icon: https://pealcast.io/favicon.svg
@@ -109,9 +117,34 @@ status-website:
       .pc-cta-btn:hover{background:#d4a64f}
       .pc-cta-support{background:transparent;color:#b07e2b !important;border:1.5px solid #d8cbb0;box-shadow:none}
       .pc-cta-support:hover{background:#f5e9cf}
+      /* --- the ERROR / 404 screen, brought on-brand ---------------------------
+         Upptime's stock error page is an <h1>, two <p>s and a blue pill button —
+         and our site-wide `a{color:brass}` rule then painted that button's label
+         brass ON blue, which was unreadable. It gets restyled outright rather
+         than patched. */
+      a.error-button{background:#c89544 !important;color:#0c1a2e !important;border:0 !important;border-radius:999px !important;font-weight:700 !important;padding:.72rem 1.35rem !important;box-shadow:0 6px 16px -6px rgba(200,149,68,.6);text-decoration:none}
+      a.error-button:hover{background:#d4a64f !important}
+      .pc-error{background:#fff;border:1px solid #e2d8c4;border-left:4px solid #c89544;padding:1.9rem 1.6rem;text-align:center;box-shadow:0 10px 30px -18px rgba(20,36,61,.4)}
+      .pc-error-icon{margin:0 auto .85rem;width:46px;height:46px;display:flex;align-items:center;justify-content:center;background:#f5e9cf;border-radius:50%}
+      .pc-error-icon svg{width:24px;height:22px;display:block}
+      .pc-error h2{font-size:1.5rem !important;margin:.1rem 0 .6rem}
+      .pc-error p{color:#4c6285;font-size:1.02rem;line-height:1.65;max-width:34rem;margin:0 auto}
+      .pc-error-actions{display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap;margin:1.35rem 0 .1rem}
+      .pc-btn-ghost{background:transparent !important;color:#b07e2b !important;border:1.5px solid #d8cbb0;box-shadow:none}
+      .pc-btn-ghost:hover{background:#f5e9cf !important}
+      .pc-error-fine{margin-top:1.15rem !important;padding-top:.9rem;border-top:1px dashed #ece3d1;font-size:.87rem !important;color:#6d85a6 !important}
+      /* --- live-streaming notice, read live from our own API ----------------- */
+      .pc-alert{margin:.7rem 0 0;padding:.7rem .85rem;border-radius:10px;font-size:.88rem;line-height:1.55;background:#fdf4e3;border:1px solid #ecd5a3;color:#7a5410}
+      .pc-alert.pc-alert-down{background:#fdeeeb;border-color:#f6cabf;color:#9c2a17}
     </style>
     <script>
     (function(){
+      // Our own API + the branded ingest hostname encoders point at in THIS env.
+      // ⚠️ Both are per-repo constants, like the SMS number above them — a dev
+      // page that quietly reads prod's API would report the wrong environment's
+      // health while looking completely normal.
+      var API='https://api.dev.pealcast.io';
+      var INGEST='live.dev.pealcast.io';
       var SMS='<div class="pc-badge">Live status alerts</div>'+
         '<h2>Get a text the moment something changes</h2>'+
         '<p>Text <b>STATUS</b> to <b>(888)&nbsp;822-8969</b> and we&#39;ll text you when a service goes down &mdash; and again when it&#39;s back to normal. No app, no account. Reply <b>STOP</b> anytime.</p>'+
@@ -123,13 +156,74 @@ status-website:
         'App':'The church dashboard, dev build (app.dev.pealcast.io).',
         'Player':'The watch page, dev build (player.dev.pealcast.io).',
         'API':'The backend, dev build (api.dev.pealcast.io).',
-        'Live streaming':'Whether we can take your feed and serve it to viewers right now.'
+        'Live streaming':'Whether we can take a feed at '+INGEST+' — the address an encoder sends to — and serve it to viewers right now.'
       };
       function injectSms(){
         var main=document.querySelector('main.container'); if(!main||document.querySelector('.pc-sms'))return;
         var h=main.querySelector('header');
         var d=document.createElement('div'); d.className='pc-card pc-sms'; d.innerHTML=SMS;
+        // On the error screen the SMS card goes BELOW the message. Upptime's error
+        // page has no <header>, so the old fallback prepended it and a visitor who
+        // hit a broken page met a marketing card before being told anything.
+        if(document.querySelector('.pc-error')){main.appendChild(d);return;}
         if(h&&h.parentNode){h.insertAdjacentElement('afterend',d);}else{main.insertBefore(d,main.firstChild);}
+      }
+      // --- the error / 404 screen -------------------------------------------
+      // Upptime ships a bare "An error occurred" page. On a STATUS site that is
+      // the worst possible moment to look broken and say nothing useful — the one
+      // thing a visitor needs to know is that this page failed, not necessarily
+      // the services it watches. So we replace it with our own card.
+      function brandError(){
+        var main=document.querySelector('main.container'); if(!main)return;
+        var btn=main.querySelector('a.error-button'); if(!btn||main.querySelector('.pc-error'))return;
+        var stock=[main.querySelector('h1'),btn];
+        main.querySelectorAll('p').forEach(function(p){if(!p.closest('.pc-card'))stock.push(p);});
+        var card=document.createElement('div'); card.className='pc-card pc-error';
+        card.innerHTML='<div class="pc-error-icon"><svg viewBox="0 0 26 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 3a2 2 0 0 0-2 2v.35C7.1 6.2 5 8.9 5 12v4l-2 3v1h18v-1l-2-3v-4c0-3.1-2.1-5.8-5-6.65V5a2 2 0 0 0-2-2z" fill="#14243d"/><path d="M9.5 21a2.5 2.5 0 0 0 5 0z" fill="#14243d"/><circle cx="22" cy="4.6" r="3.6" fill="#F0432A"/></svg></div>'+
+          '<h2>We couldn&#39;t load the latest status</h2>'+
+          '<p>Something went wrong fetching the checks &mdash; that&#39;s a problem with <b>this page</b>, not necessarily with the dev environment it watches.</p>'+
+          '<div class="pc-error-actions"><a class="pc-btn" href="/">Try again</a>'+
+          '<a class="pc-btn pc-btn-ghost" href="https://status.pealcast.io/">See production status</a></div>'+
+          '<p class="pc-error-fine">This is the <b>development</b> environment. Production status lives at status.pealcast.io.</p>';
+        stock.forEach(function(el){if(el&&el.parentNode)el.parentNode.removeChild(el);});
+        main.insertBefore(card,main.firstChild);
+      }
+      // --- live-streaming notice --------------------------------------------
+      // Read from our own API so it is current NOW, rather than at the next
+      // 5-minute Upptime run — and because a DEGRADED platform (a vendor problem
+      // short of a total outage) keeps the row green, so without this the visitor
+      // would be told nothing at all.
+      //
+      // ⚠️ Renders `public_notice` and ONLY `public_notice`. The same response
+      // carries `reasons` / `warnings`, which are engineering text — one of them
+      // names our video vendor and explains a token-signing fallback — and this
+      // is a public page.
+      //
+      // Fetched ONCE (the fetch guard is separate from the render) and rendered
+      // from the cached answer, because rendering is re-run by the MutationObserver
+      // and the alert we insert is itself a mutation — a fetch in the render path
+      // would loop forever against our own API.
+      var notice=null;
+      function renderStreamNotice(){
+        if(!notice||!notice.public_notice)return;
+        document.querySelectorAll('main.container article').forEach(function(card){
+          var n=card.querySelector('a,h4,h3,h2'); if(!n)return;
+          if(n.textContent.trim().indexOf('Live streaming')!==0)return;
+          if(card.querySelector('.pc-alert'))return;
+          var a=document.createElement('div'); a.className='pc-alert'+(notice.down?' pc-alert-down':'');
+          var b=document.createElement('b'); b.textContent=notice.down?'Live streaming is affected — ':'Heads up — ';
+          a.appendChild(b); a.appendChild(document.createTextNode(notice.public_notice));
+          card.appendChild(a);
+        });
+      }
+      function injectStreamNotice(){
+        if(notice!==null){renderStreamNotice();return;}
+        if(window.__pcNoticeFetching)return; window.__pcNoticeFetching=1;
+        fetch(API+'/health/streaming').then(function(r){return r.json();}).then(function(d){
+          var s=(d&&d.streaming)||{};
+          notice={public_notice:s.public_notice,down:(s.healthy===false)};
+          renderStreamNotice();
+        }).catch(function(){/* the status page must never break on a failed fetch */});
       }
       function injectNotes(){
         document.querySelectorAll('main.container article').forEach(function(card){
@@ -145,11 +239,14 @@ status-website:
       function stripStatusEmoji(){document.querySelectorAll('main article.up:not(.graph),main article.down:not(.graph),main article.up:not(.graph) h4,main article.down:not(.graph) h4,main h1,main h2').forEach(function(el){if(el.dataset.pcClean)return;var f=el.firstChild;if(f&&f.nodeType===3){var u=f.nodeValue.replace(/^[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}✅❌️\s]+/u,'');if(u!==f.nodeValue){f.nodeValue=u;el.dataset.pcClean='1';}}});}
       function injectCta(){var main=document.querySelector('main.container');if(!main||document.querySelector('.pc-cta'))return;var incident=/\/incident/.test(location.pathname)||!!document.querySelector('main article.down:not(.graph),.tag.open,.tag.down');var d=document.createElement('div');d.className='pc-cta';d.innerHTML=incident?'<p class="pc-cta-lead">Something not working right? Our team is on it &mdash; and here if you need a hand.</p><a class="pc-cta-btn pc-cta-support" href="https://status.pealcast.io/">See production status</a>':'<p class="pc-cta-lead">This is the <b>development</b> environment. Production status lives at status.pealcast.io.</p><a class="pc-cta-btn pc-cta-support" href="https://status.pealcast.io/">See production status &rarr;</a>';main.appendChild(d);}
       function injectLogo(){var logo=document.querySelector('nav .logo');if(!logo||logo.querySelector('.pc-brand'))return;var span=document.createElement('span');span.className='pc-brand';span.innerHTML='<svg viewBox="0 0 26 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 3a2 2 0 0 0-2 2v.35C7.1 6.2 5 8.9 5 12v4l-2 3v1h18v-1l-2-3v-4c0-3.1-2.1-5.8-5-6.65V5a2 2 0 0 0-2-2z" fill="#14243d"/><path d="M9.5 21a2.5 2.5 0 0 0 5 0z" fill="#14243d"/><circle cx="22" cy="4.6" r="3.6" fill="#F0432A"/></svg><span class="pc-brand-txt">PealCast</span>';logo.insertBefore(span,logo.firstChild);}
-      function run(){injectLogo();injectSms();injectNotes();stripStatusEmoji();injectCta();}
+      // brandError runs FIRST so injectSms/injectCta can see they are on the error
+      // screen; injectCta is skipped there because the error card carries its own
+      // actions and a second "see production status" block would just repeat it.
+      function run(){injectLogo();brandError();injectSms();injectNotes();stripStatusEmoji();injectStreamNotice();if(!document.querySelector('.pc-error'))injectCta();}
       if(document.readyState!=='loading'){run();}else{document.addEventListener('DOMContentLoaded',run);}
       var n=0,t=setInterval(function(){run(); if(++n>20)clearInterval(t);},300);
       var m=document.querySelector('main.container');
-      if(m&&window.MutationObserver){new MutationObserver(function(){injectNotes();}).observe(m,{childList:true,subtree:true});}
+      if(m&&window.MutationObserver){new MutationObserver(function(){injectNotes();renderStreamNotice();}).observe(m,{childList:true,subtree:true});}
     })();
     </script>
   introTitle: "PealCast System Status — DEV"
