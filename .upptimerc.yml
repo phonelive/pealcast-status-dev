@@ -23,6 +23,17 @@ sites:
   - name: API
     url: https://api.dev.pealcast.io/health
     icon: https://pealcast.io/favicon.svg
+  # Live streaming — checked via OUR OWN health endpoint, never by probing the
+  # ingest edge. The retired tcp-ping to live.dev.pealcast.io:1935 could not
+  # reach Cloudflare's shared anycast edge from a GitHub Actions runner and
+  # reported constant false downtime; even connecting would not have proven our
+  # ingest works. GET /health/streaming answers a question we can actually
+  # answer — active host with credentials, playback signing key stored, no
+  # sustained platform errors — and returns 503 when streaming is not
+  # serviceable. See the pealcast repo: app/controllers/health.rb.
+  - name: Live streaming
+    url: https://api.dev.pealcast.io/health/streaming
+    icon: https://pealcast.io/favicon.svg
 
 status-website:
   theme: light
@@ -111,7 +122,8 @@ status-website:
         'Website':'The marketing site, dev build (dev.pealcast.io).',
         'App':'The church dashboard, dev build (app.dev.pealcast.io).',
         'Player':'The watch page, dev build (player.dev.pealcast.io).',
-        'API':'The backend, dev build (api.dev.pealcast.io).'
+        'API':'The backend, dev build (api.dev.pealcast.io).',
+        'Live streaming':'Whether we can take your feed and serve it to viewers right now.'
       };
       function injectSms(){
         var main=document.querySelector('main.container'); if(!main||document.querySelector('.pc-sms'))return;
