@@ -76,19 +76,19 @@
     "url": "https://api.dev.pealcast.io/health/streaming",
     "icon": "https://pealcast.io/favicon.svg",
     "slug": "live-streaming",
-    "status": "down",
-    "uptime": "100.00%",
-    "uptimeDay": "99.99%",
-    "uptimeWeek": "100.00%",
-    "uptimeMonth": "100.00%",
-    "uptimeYear": "100.00%",
-    "time": 363,
-    "timeDay": 361,
-    "timeWeek": 347,
-    "timeMonth": 363,
-    "timeYear": 363,
+    "status": "up",
+    "uptime": "99.08%",
+    "uptimeDay": "91.90%",
+    "uptimeWeek": "98.84%",
+    "uptimeMonth": "99.08%",
+    "uptimeYear": "99.08%",
+    "time": 342,
+    "timeDay": 286,
+    "timeWeek": 324,
+    "timeMonth": 342,
+    "timeYear": 342,
     "dailyMinutesDown": {
-      "2026-08-25": 0
+      "2026-08-25": 117
     }
   }
 ]
