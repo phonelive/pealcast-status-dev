@@ -1,7 +1,7 @@
 url: https://api.dev.pealcast.io/health/streaming
-status: down
-code: 503
-responseTime: 394
-lastUpdated: 2026-08-25T20:40:41.190Z
+status: up
+code: 200
+responseTime: 136
+lastUpdated: 2026-08-25T22:37:14.510Z
 startTime: 2026-08-17T04:06:24.619Z
 generator: Upptime <https://github.com/upptime/upptime>
