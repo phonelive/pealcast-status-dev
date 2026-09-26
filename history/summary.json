@@ -13,7 +13,7 @@
     "time": 329,
     "timeDay": 0,
     "timeWeek": 0,
-    "timeMonth": 443,
+    "timeMonth": 415,
     "timeYear": 329,
     "dailyMinutesDown": {}
   },
@@ -31,7 +31,7 @@
     "time": 336,
     "timeDay": 0,
     "timeWeek": 0,
-    "timeMonth": 424,
+    "timeMonth": 445,
     "timeYear": 336,
     "dailyMinutesDown": {}
   },
@@ -49,7 +49,7 @@
     "time": 383,
     "timeDay": 0,
     "timeWeek": 0,
-    "timeMonth": 436,
+    "timeMonth": 453,
     "timeYear": 383,
     "dailyMinutesDown": {}
   },
@@ -67,7 +67,7 @@
     "time": 356,
     "timeDay": 0,
     "timeWeek": 0,
-    "timeMonth": 364,
+    "timeMonth": 350,
     "timeYear": 356,
     "dailyMinutesDown": {}
   },
@@ -77,15 +77,15 @@
     "icon": "https://pealcast.io/favicon.svg",
     "slug": "live-streaming",
     "status": "up",
-    "uptime": "99.79%",
+    "uptime": "99.80%",
     "uptimeDay": "100.00%",
     "uptimeWeek": "100.00%",
-    "uptimeMonth": "99.73%",
-    "uptimeYear": "99.79%",
+    "uptimeMonth": "100.00%",
+    "uptimeYear": "99.80%",
     "time": 321,
     "timeDay": 0,
     "timeWeek": 0,
-    "timeMonth": 279,
+    "timeMonth": 280,
     "timeYear": 321,
     "dailyMinutesDown": {
       "2026-08-25": 117
