@@ -19,8 +19,9 @@ on:
   push:
     paths:
       - "assets/**"
-  schedule:
-    - cron: "0 1 * * *"
+  # Recurring schedule disabled 2026-10-18 (David) -- no cron runs.
+  # schedule:
+  #   - cron: "0 1 * * *"
   repository_dispatch:
     types: [static_site]
   workflow_dispatch:

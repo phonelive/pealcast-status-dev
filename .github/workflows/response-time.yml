@@ -16,8 +16,9 @@
 
 name: Response Time CI
 on:
-  schedule:
-    - cron: "0 23 * * *"
+  # Recurring schedule disabled 2026-10-18 (David) -- no cron runs.
+  # schedule:
+  #   - cron: "0 23 * * *"
   repository_dispatch:
     types: [response_time]
   workflow_dispatch:
